@@ -1,0 +1,19 @@
+name: Demo CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Tests
+      run: |
+        echo "Test"
+    - name: Run Demo
+      run: |
+        cat README.md
