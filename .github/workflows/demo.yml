@@ -1,8 +1,8 @@
 name: Demo CI
 
 on:
-  push:
-    branches: [ master ]
+  repository_dispatch:
+    types: [trigger-webhook]
 
 jobs:
   build:
