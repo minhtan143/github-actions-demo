@@ -66,7 +66,13 @@ jobs:
 
       - name: Trigger deploy event
         run: |
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          RESPONSE=$(curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
             -d '{ "event_type": "trigger_event", "client_payload": { "version": "${{ github.ref_name }}" }}' \
-            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches
+            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches)
+
+          HTTP_STATUS=$(echo $RESPONSE | tail -n1)
+          if [[ "$HTTP_STATUS" -ge 400 ]]; then
+            echo $RESPONSE
+            exit 1
+          fi
