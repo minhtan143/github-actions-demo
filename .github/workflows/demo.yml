@@ -17,10 +17,9 @@ jobs:
         token: ${{ secrets.PAT_TOKEN }}
         tag: ${{ github.event.client_payload.version }}
         extract: true
-        out-file-path: release
 
     - name: test
       run: |
-        cd release
+        cd $GITHUB_WORKSPACE
         ls -la
         cat build.txt
