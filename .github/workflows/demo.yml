@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run Demo
+    - name: Download release
+      uses: robinraju/release-downloader@v1.11
+      with:
+        repository: ${{ github.event.client_payload.version }}
+        token: ${{ secrets.PAT_TOKEN }}
+        tag: ${{ github.event.client_payload.version }}
+        extract: true
+
+    - name: test
       run: |
-        echo "Deploying version: ${{ github.event.client_payload.version }}"
+        cat build.txt
