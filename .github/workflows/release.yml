@@ -22,15 +22,12 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Build
         run: |
-          echo build
-          # npm i
-          # npm run build
-          # cp ./dist/browser/index.html ./dist/browser/404.html
+          echo build > ./artifact/build.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v4.5.0
         with:
           name: build
-          path: ./dist/browser
+          path: ./artifact
 
   release:
     runs-on: ubuntu-latest
