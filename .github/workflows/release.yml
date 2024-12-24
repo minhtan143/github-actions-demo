@@ -58,6 +58,7 @@ jobs:
             --data '{
               "event_type": "deploy-pages",
               "client_payload": {
+                "repository": "${{ github.repository }}",
                 "version": "${{ github.ref_name }}"
               }
             }'
