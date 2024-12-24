@@ -3,9 +3,6 @@ name: Demo CI
 on:
   repository_dispatch:
     types: [deploy-pages]
-    inputs:
-      version:
-        required: true
 
 jobs:
   build:
@@ -15,4 +12,4 @@ jobs:
     steps:
     - name: Run Demo
       run: |
-        echo "Deploying version: ${{ github.event.inputs.version }}"
+        echo "Deploying version: ${{ github.event.client_payload.version }}"
