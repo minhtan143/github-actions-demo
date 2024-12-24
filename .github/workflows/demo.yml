@@ -13,7 +13,7 @@ jobs:
     - name: Download release
       uses: robinraju/release-downloader@v1.11
       with:
-        repository: ${{ github.event.client_payload.version }}
+        repository: ${{ github.event.client_payload.repository }}
         token: ${{ secrets.PAT_TOKEN }}
         tag: ${{ github.event.client_payload.version }}
         extract: true
