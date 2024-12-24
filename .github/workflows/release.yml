@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "release"
   cancel-in-progress: false
 
 jobs:
@@ -20,10 +20,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+        
       - name: Build
         run: |
           mkdir -p ./artifact
           echo build > ./artifact/build.txt
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4.5.0
         with:
@@ -39,6 +41,7 @@ jobs:
         with:
           name: build
           path: artifact
+          
       - name: Create Release
         uses: actions/create-release@v1
         id: create-release
@@ -50,6 +53,7 @@ jobs:
           body: "Automatically generated release."
           draft: false
           prerelease: false
+          
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
@@ -59,3 +63,10 @@ jobs:
           asset_path: artifact/build.txt
           asset_name: build.txt
           asset_content_type: text/plain
+
+      - name: Trigger deploy event
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{ "event_type": "trigger_event", "client_payload": { "version": "${{ github.ref_name }}" }}' \
+            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches
