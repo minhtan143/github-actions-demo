@@ -15,6 +15,4 @@ jobs:
     steps:
     - name: Run Demo
       run: |
-        cat README.md
         echo "Deploying version: ${{ github.event.inputs.version }}"
-        
