@@ -66,7 +66,12 @@ jobs:
 
       - name: Trigger deploy event
         run: |
-          curl --show-error --silent -X POST \
-            -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
-            -d '{ "event_type": "trigger_event", "client_payload": { "version": "${{ github.ref_name }}" }}' \
-            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches
+          curl --location 'https://api.github.com/repos/minhtan143/github-actions-demo/dispatches' \
+            --header 'Content-Type: application/vnd.github+json' \
+            --header 'Authorization: Bearer ${{ secrets.PAT_TOKEN }}' \
+            --data '{
+              "event_type": "deploy-pages",
+              "client_payload": {
+                "version": "${{ github.ref_name }}"
+              }
+            }'
