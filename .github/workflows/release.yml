@@ -66,9 +66,7 @@ jobs:
 
       - name: Trigger deploy event
         run: |
-          RESPONSE=$(curl -X POST \
+          curl --show-error --silent -X POST \
             -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
             -d '{ "event_type": "trigger_event", "client_payload": { "version": "${{ github.ref_name }}" }}' \
-            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches )
-
-          echo $RESPONSE
+            https://api.github.com/repos/minhtan143/github-actions-demo/dispatches
